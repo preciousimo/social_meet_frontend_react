@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom";
-import RegistrationForm from "../components/forms/RegistrationForm";
+import { toast } from "react-toastify";
+import SignupForm from "../components/Authenticate/SignupForm";
 
-function Registration() {
+function Signup() {
+  const handleRegistrationSuccess = () => {
+    toast.success("Registration successful");
+  };
+
+  const handleRegistrationError = () => {
+    toast.error("Registration failed");
+  };
   return (
     <div className="max-w-7xl mx-auto grid grid-cols-2 gap-4">
       <div className="main-left">
@@ -26,11 +34,14 @@ function Registration() {
 
       <div className="main-right">
         <div className="p-12 bg-white border border-gray-200 rounded-lg">
-            <RegistrationForm />
+          <SignupForm
+            onRegistrationSuccess={handleRegistrationSuccess}
+            onRegistrationError={handleRegistrationError}
+          />
         </div>
       </div>
     </div>
   );
 }
 
-export default Registration;
+export default Signup;

@@ -1,12 +1,9 @@
 function Home() {
   return (
-    <div>
-        <h1>Profile</h1>
-        <p>
-            Welcome!
-        </p>
-    </div>
-  )
+    <main>
+      <h1>Welcome</h1>
+    </main>
+  );
 }
 
-export default Home
+export default Home;

@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom";
-import LoginForm from "../components/authentication/LoginForm";
+import { toast } from "react-toastify";
+import LoginForm from "../components/Authenticate/LoginForm";
 
 function Login() {
+  const handleLoginSuccess = () => {
+    toast.success("Login successful");
+  };
+
+  const handleLoginError = () => {
+    toast.error("Login failed");
+  };
 
   return (
     <div className="max-w-7xl mx-auto grid grid-cols-2 gap-4">
@@ -17,18 +25,20 @@ function Login() {
 
           <p className="font-bold">
             Don&apos;t have an account?{" "}
-            <Link to="/register" className="underline">
+            <Link to="/signup" className="underline">
               Click here
             </Link>{" "}
             to create one!
           </p>
-          
         </div>
       </div>
 
       <div className="main-right">
         <div className="p-12 bg-white border border-gray-200 rounded-lg">
-          <LoginForm />
+          <LoginForm
+            onLoginSuccess={handleLoginSuccess}
+            onLoginError={handleLoginError}
+          />
         </div>
       </div>
     </div>

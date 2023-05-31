@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -12,10 +12,12 @@ function LoginForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const loginForm = event.currentTarget;
-    if (loginForm.checkValidity() === false) {
+
+    const LoginForm = event.currentTarget;
+    if (LoginForm.checkValidity() === false) {
       event.stopPropagation();
     }
+
     const data = {
       email: form.email,
       password: form.password,
