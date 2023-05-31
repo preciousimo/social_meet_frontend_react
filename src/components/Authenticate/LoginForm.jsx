@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -8,7 +10,7 @@ function LoginForm() {
     email: "",
     password: "",
   });
-  const [error, setError] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -22,10 +24,12 @@ function LoginForm() {
       email: form.email,
       password: form.password,
     };
+    setLoading(true);
+
     axios
       .post("http://127.0.0.1:8000/api/login/", data)
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         localStorage.setItem(
           "auth",
           JSON.stringify({
@@ -34,20 +38,22 @@ function LoginForm() {
             user: res.data.user,
           })
         );
-
+        toast.success("Login successful");
         navigate("/");
       })
       .catch((err) => {
         console.error(err);
         if (err.message) {
-          setError(err.request.response);
+          toast.error("No active user with this details found");
         }
+      })
+      .finally(() => {
+        setLoading(false); // Set loading state back to false
       });
   };
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
-
       <div>
         <label htmlFor="email">E-mail</label>
         <br />
@@ -74,21 +80,24 @@ function LoginForm() {
         />
       </div>
 
-      {error.length > 0 && (
-        <div className="bg-red-300 text-white rounded-lg p-6">
-          {error.map((error) => (
-            <p key={error}>{error}</p>
-          ))}
-        </div>
-      )}
-
       <div>
-        <button
-          className="py-4 px-6 bg-purple-600 text-white rounded-lg"
-          type="submit"
-        >
-          Login
-        </button>
+        {loading ? (
+          <button
+            className="py-4 px-6 bg-purple-600 text-white rounded-lg"
+            type="button"
+            disabled
+          >
+            Loading...
+          </button>
+        ) : (
+          // Render regular sign up button if loading state is false
+          <button
+            className="py-4 px-6 bg-purple-600 text-white rounded-lg"
+            type="submit"
+          >
+            Login
+          </button>
+        )}
       </div>
     </form>
   );

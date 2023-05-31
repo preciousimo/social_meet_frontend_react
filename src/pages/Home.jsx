@@ -1,8 +1,12 @@
+import Layout from "./Layout";
+
 function Home() {
   return (
-    <main>
-      <h1>Welcome</h1>
-    </main>
+    <Layout>
+      <main>
+        <h1>Welcome</h1>
+      </main>
+    </Layout>
   );
 }
 
